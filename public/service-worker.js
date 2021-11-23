@@ -1,11 +1,12 @@
 const FILES_TO_CACHE = [
   "/",
-  "/public/index.html",
-  "/public/manifest.webmanifest",
-  "/public/index.js",
-  "/public/icons/icon-192x192.png",
-  "/public/icons/icon-512x512.png"
-];;
+  "/index.html",
+  "/manifest.webmanifest",
+  "/index.js",
+  "/icons/icon-192x192.png",
+  "/icons/icon-512x512.png",
+  "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+];
 
 //static cache
 const CACHE_NAME = "static-cache-v2";
@@ -26,6 +27,22 @@ self.addEventListener("install", event => {
   self.skipWaiting();
 });
 
+//
+self.addEventListener("activate", evt =>  {
+  evt.waitUntil(
+    caches.keys().then(keyList => {
+      return Promise.all(
+        keyList.map(key => {
+          if (key !== CACHE_NAME && key !== DATA_CACHE_NAME) {
+            console.log("Removing old cache data", key);
+            return caches.delete(key);
+          }
+        })
+      );
+    })
+  );
+  self.clients.claim();
+})
 //retrieve assets from cache
 self.addEventListener('fetch', event => {
   event.respondWith(
