@@ -12,11 +12,13 @@ router.post("/api/transaction", ({ body }, res) => {
 });
 
 router.post("/api/transaction/bulk", ({ body }, res) => {
+  console.log(body);
   Transaction.insertMany(body)
     .then(dbTransaction => {
       res.json(dbTransaction);
     })
     .catch(err => {
+      console.log(err);
       res.status(400).json(err);
     });
 });

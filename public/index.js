@@ -95,7 +95,7 @@ function sendTransaction(isAdding) {
   // create record
   let transaction = {
     name: nameEl.value,
-    value: amountEl.value,
+    value: parseFloat(amountEl.value),
     date: new Date().toISOString()
   };
 
