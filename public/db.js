@@ -37,7 +37,7 @@ function checkDatabase() {
       fetch('/api/transaction/bulk', {
         method: 'POST',
         body:JSON.stringify(getAll.result),
-        Headers: {
+        headers: {
           Accept: 'application/json, text/plain, */*',
           'Content-Type': 'application/json',
         },
